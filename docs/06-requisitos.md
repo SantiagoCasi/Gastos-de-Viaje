@@ -12,7 +12,7 @@ cada fase (sección 8 del prompt maestro).
 | RF03 | Crear sesión de viaje con nombre | Cumplido | `SesionViajeController` (Fase 3) |
 | RF04 | Agregar participantes (simulados en v1) | Cumplido | `ParticipanteController` (Fase 3) |
 | RF05 | Registrar gasto (monto, fecha, lugar, motivo, pagador, método de pago, estado) | Cumplido | `GastoController` (Fase 3) |
-| RF06 | Cargar gastos sin conexión | Pendiente | `offline.js` + IndexedDB (Fase 6) |
+| RF06 | Cargar gastos sin conexión | Cumplido | `offline.js` + IndexedDB + `POST /api/sync/gastos` (Fase 6) |
 | RF07 | El organizador carga en nombre de participantes simulados | Cumplido | `GastoController`, `ParticipanteController` (Fase 3) |
 | RF08 | Balance parcial sin cerrar la sesión ("break") | Cumplido | `BalanceService.CalcularLiquidacionAsync(tipo: Parcial)` (Fase 4) |
 | RF09 | Finalizar sesión con balance final | Cumplido | `BalanceService.CalcularLiquidacionAsync(tipo: Final)` (Fase 4) |
@@ -26,9 +26,9 @@ cada fase (sección 8 del prompt maestro).
 
 | Código | Descripción | Estado | Cubierto por |
 |---|---|---|---|
-| RNF01 | Disponibilidad offline | Pendiente | PWA: manifest + service worker + banner (Fase 6) |
-| RNF02 | Web MVC responsive | Pendiente | Bootstrap + `site.css` mobile-first (Fase 7) |
-| RNF03 | Persistencia local hasta sincronizar | Pendiente | IndexedDB (Fase 6) |
+| RNF01 | Disponibilidad offline | Cumplido | PWA: manifest + service worker + banner (Fase 6) |
+| RNF02 | Web MVC responsive | Cumplido (revisión final en Fase 7) | Bootstrap + `site.css` mobile-first |
+| RNF03 | Persistencia local hasta sincronizar | Cumplido | IndexedDB (Fase 6) |
 | RNF04 | Cargar un gasto en pocos pasos | Cumplido | Vista `Gasto/Create` en una sola pantalla (Fase 3) |
 | RNF05 | Servicios externos mínimos | Cumplido por diseño | Sin SMTP, sin WhatsApp Business API (secciones 6 y 10) |
 | RNF06 | Exactitud matemática | Cumplido | `decimal(18,2)` + `BalanceService` + tests xUnit (Fase 4) |

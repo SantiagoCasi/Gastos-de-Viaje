@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using GastosDeViaje.Data;
 using GastosDeViaje.Models;
 using GastosDeViaje.Services;
@@ -24,7 +25,10 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddScoped<IBalanceService, BalanceService>();
 builder.Services.AddScoped<IComprobanteService, ComprobanteService>();
 
-builder.Services.AddControllersWithViews();
+// El único endpoint JSON (POST /api/sync/gastos) recibe MetodoPago como texto
+// ("Efectivo", etc.), igual que lo manda el <select> del formulario de gastos.
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(opciones => opciones.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 var app = builder.Build();
 

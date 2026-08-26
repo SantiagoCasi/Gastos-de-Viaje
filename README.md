@@ -76,7 +76,7 @@ En construcción, siguiendo las fases del prompt maestro (sección 8). Progreso:
 - [x] Fase 3 — CRUD scaffoldeado.
 - [x] Fase 4 — Motor de cálculo de balance.
 - [x] Fase 5 — Comprobantes PDF.
-- [ ] Fase 6 — PWA / offline.
+- [x] Fase 6 — PWA / offline.
 - [ ] Fase 7 — Cierre.
 
 ## Decisiones de arquitectura
@@ -91,6 +91,20 @@ En construcción, siguiendo las fases del prompt maestro (sección 8). Progreso:
   offline se usa solo para cargar y consultar gastos.
 - El envío por WhatsApp (RF14) se resuelve con el enlace `wa.me` y `navigator.share()`,
   sin la API de Meta (sección 6).
+
+## PWA y funcionamiento offline
+
+La app se puede "instalar" desde el navegador del celular (Agregar a pantalla de
+inicio) gracias a `wwwroot/manifest.json` y al service worker `wwwroot/js/sw.js`
+(cache-first para el shell estático, network-first para el resto). Los gastos
+cargados sin conexión se guardan en IndexedDB (`wwwroot/js/offline.js`) y se
+sincronizan solos contra `POST /api/sync/gastos` apenas vuelve la señal; mientras
+haya gastos sin sincronizar, un banner permanente lo indica en cualquier pantalla.
+El cálculo de balance **no** funciona offline (ver sección 6 del prompt maestro):
+para eso hace falta conexión.
+
+> Nota: los service workers solo se registran en `https://` o en `localhost`. En
+> producción, la app tiene que servirse por HTTPS para que la PWA funcione.
 
 ## Empaquetado futuro como app nativa (no implementado aún)
 
