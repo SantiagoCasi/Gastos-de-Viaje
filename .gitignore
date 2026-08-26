@@ -1,0 +1,12 @@
+## .NET
+bin/
+obj/
+*.user
+.vs/
+
+## Rider/VSCode
+.idea/
+.vscode/
+
+## Logs
+*.log
