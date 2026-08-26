@@ -19,8 +19,8 @@ cada fase (sección 8 del prompt maestro).
 | RF10 | Mostrar el detalle matemático | Cumplido | Vista `Liquidacion/Detalle` (Fase 4) |
 | RF11 | Sincronización multi-usuario | Fuera de alcance v1 | Solo `Participante.UsuarioId` nullable preparado |
 | RF12 | Resolución de conflictos | Fuera de alcance v1 | — |
-| RF13 | Comprobante en PDF | Pendiente | `ComprobanteService` con QuestPDF (Fase 5) |
-| RF14 | Compartir por WhatsApp | Pendiente | Enlace `wa.me` + `navigator.share()` (Fase 5) |
+| RF13 | Comprobante en PDF | Cumplido | `ComprobanteService` con QuestPDF (Fase 5) |
+| RF14 | Compartir por WhatsApp | Cumplido | Enlace `wa.me` + `navigator.share()` (Fase 5) |
 
 ## Requisitos no funcionales
 

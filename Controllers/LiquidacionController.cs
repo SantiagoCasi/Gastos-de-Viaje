@@ -2,7 +2,6 @@ using GastosDeViaje.Data;
 using GastosDeViaje.Models;
 using GastosDeViaje.Models.Enums;
 using GastosDeViaje.Services;
-using GastosDeViaje.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,12 +20,18 @@ public class LiquidacionController : Controller
 {
     private readonly AppDbContext _context;
     private readonly IBalanceService _balanceService;
+    private readonly IComprobanteService _comprobanteService;
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public LiquidacionController(AppDbContext context, IBalanceService balanceService, UserManager<ApplicationUser> userManager)
+    public LiquidacionController(
+        AppDbContext context,
+        IBalanceService balanceService,
+        IComprobanteService comprobanteService,
+        UserManager<ApplicationUser> userManager)
     {
         _context = context;
         _balanceService = balanceService;
+        _comprobanteService = comprobanteService;
         _userManager = userManager;
     }
 
@@ -72,71 +77,31 @@ public class LiquidacionController : Controller
     // GET: Liquidacion/Detalle/5
     public async Task<IActionResult> Detalle(int id)
     {
-        var liquidacion = await _context.Liquidaciones
-            .FirstOrDefaultAsync(l => l.Id == id && _context.SesionesViaje
-                .Any(s => s.Id == l.SesionViajeId && s.OrganizadorId == OrganizadorId));
-        if (liquidacion == null)
+        if (!await PerteneceAlOrganizadorAsync(id))
         {
             return NotFound();
         }
 
-        var sesionViaje = (await _context.SesionesViaje.FindAsync(liquidacion.SesionViajeId))!;
+        var detalle = await _balanceService.ObtenerDetalleAsync(id);
+        return View(detalle);
+    }
 
-        var participantes = await _context.Participantes
-            .Where(p => p.SesionViajeId == liquidacion.SesionViajeId)
-            .OrderBy(p => p.Id)
-            .ToListAsync();
-
-        var pagadoPorParticipante = await _context.Gastos
-            .Where(g => g.LiquidacionId == id)
-            .GroupBy(g => g.ParticipanteId)
-            .Select(grupo => new { ParticipanteId = grupo.Key, Total = grupo.Sum(g => g.Monto) })
-            .ToDictionaryAsync(x => x.ParticipanteId, x => x.Total);
-
-        var movimientos = await _context.MovimientosLiquidacion
-            .Where(m => m.LiquidacionId == id)
-            .ToListAsync();
-
-        var saldoPorParticipante = participantes.ToDictionary(p => p.Id, _ => 0m);
-        foreach (var movimiento in movimientos)
+    // GET: Liquidacion/DescargarPdf/5
+    public async Task<IActionResult> DescargarPdf(int id)
+    {
+        if (!await PerteneceAlOrganizadorAsync(id))
         {
-            saldoPorParticipante[movimiento.AcreedorId] += movimiento.Monto;
-            saldoPorParticipante[movimiento.DeudorId] -= movimiento.Monto;
+            return NotFound();
         }
 
-        var nombrePorParticipante = participantes.ToDictionary(p => p.Id, p => p.Nombre);
+        var pdf = await _comprobanteService.GenerarPdfAsync(id);
+        return File(pdf, "application/pdf", $"comprobante-liquidacion-{id}.pdf");
+    }
 
-        var modelo = new DetalleLiquidacionViewModel
-        {
-            LiquidacionId = liquidacion.Id,
-            SesionViajeId = sesionViaje.Id,
-            SesionNombre = sesionViaje.Nombre,
-            Moneda = sesionViaje.Moneda,
-            Tipo = liquidacion.Tipo,
-            Fecha = liquidacion.Fecha,
-            TotalGastado = liquidacion.TotalGastado,
-            CantidadParticipantes = liquidacion.CantidadParticipantes,
-            CuotaIdeal = liquidacion.CuotaIdeal,
-            Participantes = participantes.Select(p =>
-            {
-                var pagado = pagadoPorParticipante.GetValueOrDefault(p.Id);
-                var saldo = saldoPorParticipante[p.Id];
-                return new FilaParticipanteViewModel
-                {
-                    Nombre = p.Nombre,
-                    Pagado = pagado,
-                    Cuota = pagado - saldo,
-                    Saldo = saldo
-                };
-            }).ToList(),
-            Transferencias = movimientos.Select(m => new TransferenciaViewModel
-            {
-                DeudorNombre = nombrePorParticipante[m.DeudorId],
-                AcreedorNombre = nombrePorParticipante[m.AcreedorId],
-                Monto = m.Monto
-            }).ToList()
-        };
-
-        return View(modelo);
+    private async Task<bool> PerteneceAlOrganizadorAsync(int liquidacionId)
+    {
+        return await _context.Liquidaciones
+            .AnyAsync(l => l.Id == liquidacionId && _context.SesionesViaje
+                .Any(s => s.Id == l.SesionViajeId && s.OrganizadorId == OrganizadorId));
     }
 }

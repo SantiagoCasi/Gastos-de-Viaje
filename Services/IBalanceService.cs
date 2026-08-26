@@ -16,4 +16,10 @@ public interface IBalanceService
     /// <see cref="TipoLiquidacion.Final"/>) sobre los gastos pendientes de la sesión.
     /// </summary>
     Task<Liquidacion> CalcularLiquidacionAsync(int sesionViajeId, TipoLiquidacion tipo);
+
+    /// <summary>
+    /// Reconstruye el detalle matemático (RF10) de una liquidación ya calculada, a
+    /// partir de los gastos y movimientos que quedaron persistidos.
+    /// </summary>
+    Task<ResultadoLiquidacion> ObtenerDetalleAsync(int liquidacionId);
 }

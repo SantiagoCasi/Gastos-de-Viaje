@@ -75,7 +75,7 @@ En construcción, siguiendo las fases del prompt maestro (sección 8). Progreso:
 - [x] Fase 2 — Modelo de datos.
 - [x] Fase 3 — CRUD scaffoldeado.
 - [x] Fase 4 — Motor de cálculo de balance.
-- [ ] Fase 5 — Comprobantes PDF.
+- [x] Fase 5 — Comprobantes PDF.
 - [ ] Fase 6 — PWA / offline.
 - [ ] Fase 7 — Cierre.
 

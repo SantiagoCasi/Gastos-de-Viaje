@@ -4,6 +4,10 @@ using GastosDeViaje.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+// QuestPDF requiere aceptar explícitamente el tipo de licencia antes de generar
+// cualquier documento. Community es gratuita para este tipo de proyecto.
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -18,6 +22,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddScoped<IBalanceService, BalanceService>();
+builder.Services.AddScoped<IComprobanteService, ComprobanteService>();
 
 builder.Services.AddControllersWithViews();
 

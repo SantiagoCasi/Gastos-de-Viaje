@@ -135,6 +135,87 @@ public class BalanceService : IBalanceService
         return liquidacion;
     }
 
+    public async Task<ResultadoLiquidacion> ObtenerDetalleAsync(int liquidacionId)
+    {
+        var liquidacion = await _context.Liquidaciones.FindAsync(liquidacionId)
+            ?? throw new InvalidOperationException("La liquidación no existe.");
+        var sesionViaje = await _context.SesionesViaje.FindAsync(liquidacion.SesionViajeId)
+            ?? throw new InvalidOperationException("La sesión de viaje no existe.");
+
+        var participantes = await _context.Participantes
+            .Where(p => p.SesionViajeId == liquidacion.SesionViajeId)
+            .OrderBy(p => p.Id)
+            .ToListAsync();
+
+        // Pagado_i: suma de los gastos de esta liquidación donde el participante figura como pagador.
+        var pagadoPorParticipante = await _context.Gastos
+            .Where(g => g.LiquidacionId == liquidacionId)
+            .GroupBy(g => g.ParticipanteId)
+            .Select(grupo => new { ParticipanteId = grupo.Key, Total = grupo.Sum(g => g.Monto) })
+            .ToDictionaryAsync(x => x.ParticipanteId, x => x.Total);
+
+        var movimientos = await _context.MovimientosLiquidacion
+            .Where(m => m.LiquidacionId == liquidacionId)
+            .ToListAsync();
+
+        // Saldo_i se reconstruye a partir de los movimientos ya persistidos: participante
+        // acreedor suma, deudor resta. Cuota_i = Pagado_i - Saldo_i (despejando la fórmula
+        // del paso 6 del algoritmo). No hace falta volver a correr el redondeo de centavos.
+        var saldoPorParticipante = participantes.ToDictionary(p => p.Id, _ => 0m);
+        foreach (var movimiento in movimientos)
+        {
+            saldoPorParticipante[movimiento.AcreedorId] += movimiento.Monto;
+            saldoPorParticipante[movimiento.DeudorId] -= movimiento.Monto;
+        }
+
+        var nombrePorParticipante = participantes.ToDictionary(p => p.Id, p => p.Nombre);
+
+        var gastosIncluidos = await _context.Gastos
+            .Where(g => g.LiquidacionId == liquidacionId)
+            .OrderBy(g => g.Fecha)
+            .ToListAsync();
+        var gastos = gastosIncluidos.Select(g => new GastoIncluido
+        {
+            Fecha = g.Fecha,
+            Lugar = g.Lugar,
+            Motivo = g.Motivo,
+            ParticipanteNombre = nombrePorParticipante[g.ParticipanteId],
+            Monto = g.Monto
+        }).ToList();
+
+        return new ResultadoLiquidacion
+        {
+            LiquidacionId = liquidacion.Id,
+            SesionViajeId = sesionViaje.Id,
+            SesionNombre = sesionViaje.Nombre,
+            Moneda = sesionViaje.Moneda,
+            Tipo = liquidacion.Tipo,
+            Fecha = liquidacion.Fecha,
+            TotalGastado = liquidacion.TotalGastado,
+            CantidadParticipantes = liquidacion.CantidadParticipantes,
+            CuotaIdeal = liquidacion.CuotaIdeal,
+            Participantes = participantes.Select(p =>
+            {
+                var pagado = pagadoPorParticipante.GetValueOrDefault(p.Id);
+                var saldo = saldoPorParticipante[p.Id];
+                return new BalanceParticipante
+                {
+                    Nombre = p.Nombre,
+                    Pagado = pagado,
+                    Cuota = pagado - saldo,
+                    Saldo = saldo
+                };
+            }).ToList(),
+            Transferencias = movimientos.Select(m => new Transferencia
+            {
+                DeudorNombre = nombrePorParticipante[m.DeudorId],
+                AcreedorNombre = nombrePorParticipante[m.AcreedorId],
+                Monto = m.Monto
+            }).ToList(),
+            Gastos = gastos
+        };
+    }
+
     /// <summary>
     /// Ordena a los acreedores (saldo positivo) de mayor a menor y a los deudores
     /// (saldo negativo) de mayor a menor deuda, y va cruzando el mayor deudor con el
