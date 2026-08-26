@@ -26,16 +26,24 @@ y los diagramas en [`docs/`](docs/).
 
 ## Cómo levantar la base de datos
 
-1. Verificar/ajustar la cadena de conexión en `appsettings.json`:
+1. Verificar/ajustar la cadena de conexión en `appsettings.json`. En esta máquina de
+   desarrollo el servicio de SQL Server corre en la **instancia por defecto** (no
+   `SQLEXPRESS`), por eso quedó así:
    ```
-   Server=localhost\SQLEXPRESS;Database=GastosDeViaje;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true
+   Server=localhost;Database=GastosDeViaje;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true
    ```
+   Si en tu máquina SQL Server corre como instancia con nombre, usá
+   `Server=localhost\NOMBRE_INSTANCIA;...`.
 2. Aplicar las migraciones (desde la carpeta del proyecto, o con la Package Manager Console
    de Visual Studio usando `Update-Database`):
    ```
    dotnet ef database update
    ```
-   *(Las migraciones y el seed de datos de ejemplo se agregan en la Fase 2.)*
+3. Al correr la app en modo `Development`, `SeedData` carga automáticamente una sesión de
+   ejemplo ("Viaje a Bariloche") con 4 participantes y 6 gastos, y crea un usuario
+   organizador de demostración si no existe (`organizador@demo.com` / `Demo123$`) para
+   poder loguearse y ver los datos sin tener que registrarse a mano. La carga es
+   idempotente: si ya hay una sesión de viaje, no hace nada.
 
 ## Cómo correr el proyecto
 
@@ -53,7 +61,7 @@ En construcción, siguiendo las fases del prompt maestro (sección 8). Progreso:
 
 - [x] Fase 0 — Documentación y diagramas (`docs/`).
 - [x] Fase 1 — Solución y esqueleto (Identity Individual Accounts, estructura de carpetas).
-- [ ] Fase 2 — Modelo de datos.
+- [x] Fase 2 — Modelo de datos.
 - [ ] Fase 3 — CRUD scaffoldeado.
 - [ ] Fase 4 — Motor de cálculo de balance.
 - [ ] Fase 5 — Comprobantes PDF.

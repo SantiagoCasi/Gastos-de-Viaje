@@ -7,8 +7,8 @@ cada fase (sección 8 del prompt maestro).
 
 | Código | Descripción | Estado | Cubierto por |
 |---|---|---|---|
-| RF01 | Registrar usuario con email | Pendiente | ASP.NET Core Identity (Fase 1) |
-| RF02 | Iniciar sesión | Pendiente | ASP.NET Core Identity (Fase 1) |
+| RF01 | Registrar usuario con email | Cumplido | ASP.NET Core Identity (Fase 1) |
+| RF02 | Iniciar sesión | Cumplido | ASP.NET Core Identity (Fase 1) |
 | RF03 | Crear sesión de viaje con nombre | Pendiente | `SesionViajeController` (Fase 3) |
 | RF04 | Agregar participantes (simulados en v1) | Pendiente | `ParticipanteController` (Fase 3) |
 | RF05 | Registrar gasto (monto, fecha, lugar, motivo, pagador, método de pago, estado) | Pendiente | `GastoController` (Fase 3) |

@@ -26,6 +26,12 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+else
+{
+    // Datos de ejemplo solo en desarrollo, para poder probar el algoritmo de balance.
+    using var scope = app.Services.CreateScope();
+    await SeedData.InicializarAsync(scope.ServiceProvider);
+}
 
 app.UseHttpsRedirection();
 app.UseRouting();
