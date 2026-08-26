@@ -1,0 +1,15 @@
+@model GastosDeViaje.Models.Participante
+@{
+    var sesionViaje = (GastosDeViaje.Models.SesionViaje)ViewBag.SesionViaje;
+    ViewData["Title"] = $"Eliminar participante de {sesionViaje.Nombre}";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>¿Confirmás que querés eliminar a <strong>@Model.Nombre</strong>? Si tiene gastos cargados, primero hay que reasignarlos o eliminarlos.</p>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" asp-route-sesionViajeId="@Model.SesionViajeId" class="btn btn-outline-secondary">Cancelar</a>
+</form>

@@ -1,0 +1,54 @@
+@model IEnumerable<GastosDeViaje.Models.SesionViaje>
+@using GastosDeViaje.Models.Enums
+
+@{
+    ViewData["Title"] = "Mis sesiones de viaje";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nueva sesión de viaje</a>
+</p>
+
+@if (!Model.Any())
+{
+    <p>Todavía no creaste ninguna sesión de viaje.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                    <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                    <th>@Html.DisplayNameFor(model => model.FechaCreacion)</th>
+                    <th>@Html.DisplayNameFor(model => model.Moneda)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                        <td>
+                            <span class="badge @(item.Estado == EstadoSesion.Abierta ? "text-bg-success" : "text-bg-secondary")">
+                                @item.Estado
+                            </span>
+                        </td>
+                        <td>@item.FechaCreacion.ToShortDateString()</td>
+                        <td>@Html.DisplayFor(modelItem => item.Moneda)</td>
+                        <td class="text-end">
+                            <a asp-controller="Participante" asp-action="Index" asp-route-sesionViajeId="@item.Id" class="btn btn-sm btn-outline-secondary">Participantes</a>
+                            <a asp-controller="Gasto" asp-action="Index" asp-route-sesionViajeId="@item.Id" class="btn btn-sm btn-outline-secondary">Gastos</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,26 @@
+@model GastosDeViaje.Models.SesionViaje
+
+@{
+    ViewData["Title"] = "Eliminar sesión de viaje";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>¿Confirmás que querés eliminar esta sesión de viaje? Se van a borrar también sus participantes, gastos y liquidaciones.</p>
+
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Nombre)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.Nombre)</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Estado)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.Estado)</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.FechaCreacion)</dt>
+    <dd class="col-sm-9">@Model.FechaCreacion.ToShortDateString()</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+</form>

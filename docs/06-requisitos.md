@@ -9,11 +9,11 @@ cada fase (sección 8 del prompt maestro).
 |---|---|---|---|
 | RF01 | Registrar usuario con email | Cumplido | ASP.NET Core Identity (Fase 1) |
 | RF02 | Iniciar sesión | Cumplido | ASP.NET Core Identity (Fase 1) |
-| RF03 | Crear sesión de viaje con nombre | Pendiente | `SesionViajeController` (Fase 3) |
-| RF04 | Agregar participantes (simulados en v1) | Pendiente | `ParticipanteController` (Fase 3) |
-| RF05 | Registrar gasto (monto, fecha, lugar, motivo, pagador, método de pago, estado) | Pendiente | `GastoController` (Fase 3) |
+| RF03 | Crear sesión de viaje con nombre | Cumplido | `SesionViajeController` (Fase 3) |
+| RF04 | Agregar participantes (simulados en v1) | Cumplido | `ParticipanteController` (Fase 3) |
+| RF05 | Registrar gasto (monto, fecha, lugar, motivo, pagador, método de pago, estado) | Cumplido | `GastoController` (Fase 3) |
 | RF06 | Cargar gastos sin conexión | Pendiente | `offline.js` + IndexedDB (Fase 6) |
-| RF07 | El organizador carga en nombre de participantes simulados | Pendiente | `GastoController`, `ParticipanteController` (Fase 3) |
+| RF07 | El organizador carga en nombre de participantes simulados | Cumplido | `GastoController`, `ParticipanteController` (Fase 3) |
 | RF08 | Balance parcial sin cerrar la sesión ("break") | Pendiente | `BalanceService.CalcularLiquidacion(tipo: Parcial)` (Fase 4) |
 | RF09 | Finalizar sesión con balance final | Pendiente | `BalanceService.CalcularLiquidacion(tipo: Final)` (Fase 4) |
 | RF10 | Mostrar el detalle matemático | Pendiente | Vista `Liquidacion/Detalle` (Fase 4) |
@@ -29,7 +29,7 @@ cada fase (sección 8 del prompt maestro).
 | RNF01 | Disponibilidad offline | Pendiente | PWA: manifest + service worker + banner (Fase 6) |
 | RNF02 | Web MVC responsive | Pendiente | Bootstrap + `site.css` mobile-first (Fase 7) |
 | RNF03 | Persistencia local hasta sincronizar | Pendiente | IndexedDB (Fase 6) |
-| RNF04 | Cargar un gasto en pocos pasos | Pendiente | Vista `Gasto/Create` en una sola pantalla (Fase 3) |
+| RNF04 | Cargar un gasto en pocos pasos | Cumplido | Vista `Gasto/Create` en una sola pantalla (Fase 3) |
 | RNF05 | Servicios externos mínimos | Cumplido por diseño | Sin SMTP, sin WhatsApp Business API (secciones 6 y 10) |
 | RNF06 | Exactitud matemática | Pendiente | `decimal(18,2)` + `BalanceService` + tests xUnit (Fase 4) |
 | RNF07 | Soportar sesiones con muchos participantes | Pendiente | Algoritmo de minimización de transferencias (Fase 4) |

@@ -1,11 +1,25 @@
+/* RNF04: base tipográfica 16-18px, mobile-first (se diseña primero para celular). */
 html {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 18px;
   }
+}
+
+/* RNF04: botones y áreas táctiles de mínimo 44x44px, para uso en movimiento. */
+.btn,
+.form-control,
+.form-select {
+  min-height: 44px;
+}
+
+/* RNF04: los montos se muestran más grandes y en negrita que el resto del texto. */
+.monto {
+  font-size: 1.25em;
+  font-weight: 700;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {

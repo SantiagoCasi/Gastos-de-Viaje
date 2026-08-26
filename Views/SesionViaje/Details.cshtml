@@ -1,0 +1,31 @@
+@model GastosDeViaje.Models.SesionViaje
+
+@{
+    ViewData["Title"] = "Detalle de la sesión de viaje";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Nombre)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.Nombre)</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Estado)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.Estado)</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.FechaCreacion)</dt>
+    <dd class="col-sm-9">@Model.FechaCreacion.ToShortDateString()</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.FechaCierre)</dt>
+    <dd class="col-sm-9">@(Model.FechaCierre?.ToShortDateString() ?? "—")</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Moneda)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.Moneda)</dd>
+</dl>
+
+<div>
+    <a asp-controller="Participante" asp-action="Index" asp-route-sesionViajeId="@Model.Id" class="btn btn-outline-secondary">Participantes</a>
+    <a asp-controller="Gasto" asp-action="Index" asp-route-sesionViajeId="@Model.Id" class="btn btn-outline-secondary">Gastos</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Editar</a>
+    <a asp-action="Index" class="btn btn-link">Volver al listado</a>
+</div>

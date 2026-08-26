@@ -14,13 +14,17 @@ public class SesionViaje
 
     [Required]
     [StringLength(100)]
+    [Display(Name = "Nombre del viaje")]
     public string Nombre { get; set; } = string.Empty;
 
+    [Display(Name = "Estado")]
     public EstadoSesion Estado { get; set; } = EstadoSesion.Abierta;
 
     [Required]
+    [Display(Name = "Fecha de creación")]
     public DateTime FechaCreacion { get; set; }
 
+    [Display(Name = "Fecha de cierre")]
     public DateTime? FechaCierre { get; set; }
 
     /// <summary>
@@ -29,6 +33,7 @@ public class SesionViaje
     /// </summary>
     [Required]
     [StringLength(3)]
+    [Display(Name = "Moneda")]
     public string Moneda { get; set; } = "ARS";
 
     [Required]

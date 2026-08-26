@@ -62,7 +62,7 @@ En construcción, siguiendo las fases del prompt maestro (sección 8). Progreso:
 - [x] Fase 0 — Documentación y diagramas (`docs/`).
 - [x] Fase 1 — Solución y esqueleto (Identity Individual Accounts, estructura de carpetas).
 - [x] Fase 2 — Modelo de datos.
-- [ ] Fase 3 — CRUD scaffoldeado.
+- [x] Fase 3 — CRUD scaffoldeado.
 - [ ] Fase 4 — Motor de cálculo de balance.
 - [ ] Fase 5 — Comprobantes PDF.
 - [ ] Fase 6 — PWA / offline.

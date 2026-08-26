@@ -1,0 +1,78 @@
+@model IEnumerable<GastosDeViaje.ViewModels.GastoListItemViewModel>
+@{
+    var sesionViaje = (GastosDeViaje.Models.SesionViaje)ViewBag.SesionViaje;
+    ViewData["Title"] = $"Gastos de {sesionViaje.Nombre}";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (TempData["Error"] is string error)
+{
+    <div class="alert alert-warning" role="alert">@error</div>
+}
+
+<p>
+    @if (sesionViaje.Estado == GastosDeViaje.Models.Enums.EstadoSesion.Abierta)
+    {
+        <a asp-action="Create" asp-route-sesionViajeId="@sesionViaje.Id" class="btn btn-primary">Cargar gasto</a>
+    }
+    else
+    {
+        <button type="button" class="btn btn-primary" disabled title="La sesión está cerrada">Cargar gasto</button>
+    }
+    <a asp-controller="SesionViaje" asp-action="Details" asp-route-id="@sesionViaje.Id" class="btn btn-outline-secondary">Volver a la sesión</a>
+</p>
+
+@if (!Model.Any())
+{
+    <p>Todavía no hay gastos cargados en esta sesión.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.First().Fecha)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Lugar)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Motivo)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().ParticipanteNombre)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().MetodoPago)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Monto)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Saldado)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Fecha.ToShortDateString()</td>
+                        <td>@item.Lugar</td>
+                        <td>@item.Motivo</td>
+                        <td>@item.ParticipanteNombre</td>
+                        <td>@item.MetodoPago</td>
+                        <td class="monto">@item.Monto.ToString("C2")</td>
+                        <td>
+                            @if (item.Saldado)
+                            {
+                                <span class="badge text-bg-success">Saldado</span>
+                            }
+                            else
+                            {
+                                <span class="badge text-bg-warning">Pendiente</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            @if (!item.Saldado && sesionViaje.Estado == GastosDeViaje.Models.Enums.EstadoSesion.Abierta)
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
