@@ -1,5 +1,6 @@
 using GastosDeViaje.Data;
 using GastosDeViaje.Models;
+using GastosDeViaje.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // no se configura SMTP, decisión tomada en la sección 6 del prompt maestro.
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddScoped<IBalanceService, BalanceService>();
 
 builder.Services.AddControllersWithViews();
 

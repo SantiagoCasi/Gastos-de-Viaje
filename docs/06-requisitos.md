@@ -14,9 +14,9 @@ cada fase (sección 8 del prompt maestro).
 | RF05 | Registrar gasto (monto, fecha, lugar, motivo, pagador, método de pago, estado) | Cumplido | `GastoController` (Fase 3) |
 | RF06 | Cargar gastos sin conexión | Pendiente | `offline.js` + IndexedDB (Fase 6) |
 | RF07 | El organizador carga en nombre de participantes simulados | Cumplido | `GastoController`, `ParticipanteController` (Fase 3) |
-| RF08 | Balance parcial sin cerrar la sesión ("break") | Pendiente | `BalanceService.CalcularLiquidacion(tipo: Parcial)` (Fase 4) |
-| RF09 | Finalizar sesión con balance final | Pendiente | `BalanceService.CalcularLiquidacion(tipo: Final)` (Fase 4) |
-| RF10 | Mostrar el detalle matemático | Pendiente | Vista `Liquidacion/Detalle` (Fase 4) |
+| RF08 | Balance parcial sin cerrar la sesión ("break") | Cumplido | `BalanceService.CalcularLiquidacionAsync(tipo: Parcial)` (Fase 4) |
+| RF09 | Finalizar sesión con balance final | Cumplido | `BalanceService.CalcularLiquidacionAsync(tipo: Final)` (Fase 4) |
+| RF10 | Mostrar el detalle matemático | Cumplido | Vista `Liquidacion/Detalle` (Fase 4) |
 | RF11 | Sincronización multi-usuario | Fuera de alcance v1 | Solo `Participante.UsuarioId` nullable preparado |
 | RF12 | Resolución de conflictos | Fuera de alcance v1 | — |
 | RF13 | Comprobante en PDF | Pendiente | `ComprobanteService` con QuestPDF (Fase 5) |
@@ -31,8 +31,8 @@ cada fase (sección 8 del prompt maestro).
 | RNF03 | Persistencia local hasta sincronizar | Pendiente | IndexedDB (Fase 6) |
 | RNF04 | Cargar un gasto en pocos pasos | Cumplido | Vista `Gasto/Create` en una sola pantalla (Fase 3) |
 | RNF05 | Servicios externos mínimos | Cumplido por diseño | Sin SMTP, sin WhatsApp Business API (secciones 6 y 10) |
-| RNF06 | Exactitud matemática | Pendiente | `decimal(18,2)` + `BalanceService` + tests xUnit (Fase 4) |
-| RNF07 | Soportar sesiones con muchos participantes | Pendiente | Algoritmo de minimización de transferencias (Fase 4) |
+| RNF06 | Exactitud matemática | Cumplido | `decimal(18,2)` + `BalanceService` + tests xUnit (Fase 4) |
+| RNF07 | Soportar sesiones con muchos participantes | Cumplido | Algoritmo de minimización de transferencias (Fase 4) |
 
 ## Casos de uso → clases
 

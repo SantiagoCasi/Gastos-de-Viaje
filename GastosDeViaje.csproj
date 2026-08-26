@@ -10,6 +10,15 @@
     <None Include=".github\agents\mi agente.agent.md" />
   </ItemGroup>
 
+  <!-- GastosDeViaje.Tests vive dentro de esta misma carpeta (ver sección 7): sin este
+       exclude, el glob por defecto del SDK compilaría sus archivos dos veces. -->
+  <ItemGroup>
+    <Compile Remove="GastosDeViaje.Tests\**" />
+    <Content Remove="GastosDeViaje.Tests\**" />
+    <EmbeddedResource Remove="GastosDeViaje.Tests\**" />
+    <None Remove="GastosDeViaje.Tests\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.0">

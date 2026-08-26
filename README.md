@@ -55,6 +55,17 @@ dotnet run
 
 O bien abrir `GastosDeViaje.slnx` en Visual Studio 2026 y ejecutar con F5.
 
+## Cómo correr los tests
+
+Los tests de `GastosDeViaje.Tests` (algoritmo de balance, Fase 4) corren contra una base
+SQL Server real llamada `GastosDeViajeTests`, en la misma instancia local
+(`Server=localhost`): no hay ningún paquete de mocking/in-memory en la lista de NuGets
+autorizados. La base de tests se crea y se borra sola en cada corrida.
+
+```
+dotnet test GastosDeViaje.Tests
+```
+
 ## Estado del proyecto
 
 En construcción, siguiendo las fases del prompt maestro (sección 8). Progreso:
@@ -63,7 +74,7 @@ En construcción, siguiendo las fases del prompt maestro (sección 8). Progreso:
 - [x] Fase 1 — Solución y esqueleto (Identity Individual Accounts, estructura de carpetas).
 - [x] Fase 2 — Modelo de datos.
 - [x] Fase 3 — CRUD scaffoldeado.
-- [ ] Fase 4 — Motor de cálculo de balance.
+- [x] Fase 4 — Motor de cálculo de balance.
 - [ ] Fase 5 — Comprobantes PDF.
 - [ ] Fase 6 — PWA / offline.
 - [ ] Fase 7 — Cierre.

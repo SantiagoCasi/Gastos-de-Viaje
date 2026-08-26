@@ -47,6 +47,13 @@ public class SesionViajeController : Controller
             return NotFound();
         }
 
+        ViewBag.HayGastosPendientes = await _context.Gastos
+            .AnyAsync(g => g.SesionViajeId == sesionViaje.Id && g.LiquidacionId == null);
+        ViewBag.Liquidaciones = await _context.Liquidaciones
+            .Where(l => l.SesionViajeId == sesionViaje.Id)
+            .OrderByDescending(l => l.Fecha)
+            .ToListAsync();
+
         return View(sesionViaje);
     }
 

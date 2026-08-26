@@ -137,7 +137,7 @@ namespace GastosDeViaje.Data.Migrations
 
                     b.HasIndex("SesionViajeId");
 
-                    b.ToTable("Gastos");
+                    b.ToTable("Gastos", (string)null);
                 });
 
             modelBuilder.Entity("GastosDeViaje.Models.Liquidacion", b =>
@@ -172,7 +172,7 @@ namespace GastosDeViaje.Data.Migrations
 
                     b.HasIndex("SesionViajeId");
 
-                    b.ToTable("Liquidaciones");
+                    b.ToTable("Liquidaciones", (string)null);
                 });
 
             modelBuilder.Entity("GastosDeViaje.Models.MovimientoLiquidacion", b =>
@@ -204,7 +204,7 @@ namespace GastosDeViaje.Data.Migrations
 
                     b.HasIndex("LiquidacionId");
 
-                    b.ToTable("MovimientosLiquidacion");
+                    b.ToTable("MovimientosLiquidacion", (string)null);
                 });
 
             modelBuilder.Entity("GastosDeViaje.Models.Participante", b =>
@@ -235,7 +235,7 @@ namespace GastosDeViaje.Data.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("Participantes");
+                    b.ToTable("Participantes", (string)null);
                 });
 
             modelBuilder.Entity("GastosDeViaje.Models.SesionViaje", b =>
@@ -273,7 +273,7 @@ namespace GastosDeViaje.Data.Migrations
 
                     b.HasIndex("OrganizadorId");
 
-                    b.ToTable("SesionesViaje");
+                    b.ToTable("SesionesViaje", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

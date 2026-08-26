@@ -1,0 +1,71 @@
+@model GastosDeViaje.ViewModels.DetalleLiquidacionViewModel
+@using GastosDeViaje.Models.Enums
+@{
+    var tipoTexto = Model.Tipo == TipoLiquidacion.Parcial ? "Break (liquidación parcial)" : "Liquidación final";
+    ViewData["Title"] = $"{tipoTexto} — {Model.SesionNombre}";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>Calculada el @Model.Fecha.ToShortDateString().</p>
+
+<h2>Resumen</h2>
+<dl class="row">
+    <dt class="col-sm-4 col-md-3">Total gastado</dt>
+    <dd class="col-sm-8 col-md-9 monto">@Model.TotalGastado.ToString("C2") @Model.Moneda</dd>
+
+    <dt class="col-sm-4 col-md-3">Cantidad de participantes</dt>
+    <dd class="col-sm-8 col-md-9">@Model.CantidadParticipantes</dd>
+
+    <dt class="col-sm-4 col-md-3">Cuota ideal</dt>
+    <dd class="col-sm-8 col-md-9 monto">@Model.CuotaIdeal.ToString("C2") @Model.Moneda</dd>
+</dl>
+
+<h2>Detalle por participante</h2>
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Participante</th>
+                <th>Pagado</th>
+                <th>Cuota</th>
+                <th>Saldo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var fila in Model.Participantes)
+            {
+                <tr>
+                    <td>@fila.Nombre</td>
+                    <td>@fila.Pagado.ToString("C2")</td>
+                    <td>@fila.Cuota.ToString("C2")</td>
+                    <td class="@(fila.Saldo > 0 ? "text-success" : fila.Saldo < 0 ? "text-danger" : "")">
+                        @fila.Saldo.ToString("C2")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<h2>Transferencias sugeridas</h2>
+@if (!Model.Transferencias.Any())
+{
+    <p>Nadie le debe nada a nadie: todos pagaron exactamente su cuota.</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var transferencia in Model.Transferencias)
+        {
+            <li class="list-group-item">
+                <strong>@transferencia.DeudorNombre</strong> le paga
+                <span class="monto">@transferencia.Monto.ToString("C2")</span>
+                a <strong>@transferencia.AcreedorNombre</strong>
+            </li>
+        }
+    </ul>
+}
+
+<p class="mt-3">
+    <a asp-controller="SesionViaje" asp-action="Details" asp-route-id="@Model.SesionViajeId" class="btn btn-outline-secondary">Volver a la sesión</a>
+</p>

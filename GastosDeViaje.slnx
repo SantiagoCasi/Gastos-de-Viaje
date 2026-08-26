@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="GastosDeViaje.csproj" />
+  <Project Path="GastosDeViaje.Tests\GastosDeViaje.Tests.csproj" />
 </Solution>
