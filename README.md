@@ -20,8 +20,8 @@ y los diagramas en [`docs/`](docs/).
 ## Requisitos previos
 
 - .NET SDK 10.0 o superior.
-- SQL Server Express o Developer, con una instancia accesible en `localhost\SQLEXPRESS`
-  (o ajustar la cadena de conexión, ver abajo).
+- SQL Server Express o Developer, con una instancia local accesible (ver "Cómo levantar
+  la base de datos" para ajustar la cadena de conexión a tu instancia).
 - (Opcional) SQL Server Management Studio para inspeccionar la base.
 
 ## Cómo levantar la base de datos
@@ -77,7 +77,7 @@ En construcción, siguiendo las fases del prompt maestro (sección 8). Progreso:
 - [x] Fase 4 — Motor de cálculo de balance.
 - [x] Fase 5 — Comprobantes PDF.
 - [x] Fase 6 — PWA / offline.
-- [ ] Fase 7 — Cierre.
+- [x] Fase 7 — Cierre.
 
 ## Decisiones de arquitectura
 
@@ -91,6 +91,31 @@ En construcción, siguiendo las fases del prompt maestro (sección 8). Progreso:
   offline se usa solo para cargar y consultar gastos.
 - El envío por WhatsApp (RF14) se resuelve con el enlace `wa.me` y `navigator.share()`,
   sin la API de Meta (sección 6).
+
+## Desviaciones respecto de la especificación (transparencia, sección 0.6)
+
+- **Estructura de carpetas.** El esqueleto que generó Visual Studio (Fase 1) dejó el
+  proyecto web en la **raíz** del repositorio en vez de en una subcarpeta `GastosDeViaje/`
+  como muestra el árbol de la sección 7. No se reestructuró para no arriesgar romper
+  referencias ya en uso; `GastosDeViaje.Tests/` quedó como hermano dentro de esa misma
+  carpeta, con un `<Compile Remove>` en el `.csproj` principal para que sus archivos no
+  se compilen dos veces (el SDK de .NET globa `**/*.cs` recursivamente por defecto).
+- **Un paquete NuGet fuera de la lista cerrada de la sección 1:**
+  `Microsoft.EntityFrameworkCore.Design`. Es necesario para que `Add-Migration` /
+  `Update-Database` (el paquete `Tools`, que sí está autorizado) funcionen: sin él,
+  Visual Studio y la CLI de EF Core dan el error "this package is required for the
+  Package Manager Console tools to work". Está marcado `PrivateAssets="all"`: no se
+  publica en runtime, solo se usa en tiempo de diseño/build.
+- Durante el scaffolding de la Fase 3 se agregó **temporalmente**
+  `Microsoft.VisualStudio.Web.CodeGeneration.Design` —el motor real detrás de "Agregar
+  > Controlador > MVC con vistas, usando Entity Framework" de Visual Studio, reproducido
+  acá por CLI (`dotnet-aspnet-codegenerator`) porque no había una instancia interactiva
+  de Visual Studio disponible— y se quitó del `.csproj` apenas terminó de generar los
+  controllers y vistas. No queda en el proyecto final.
+- La cadena de conexión quedó apuntando a `Server=localhost` (instancia por defecto)
+  en vez de `localhost\SQLEXPRESS`, porque en esta máquina de desarrollo SQL Server
+  corre como instancia por defecto, no como instancia con nombre `SQLEXPRESS`. El
+  prompt maestro ya preveía "ajustar la instancia si hace falta".
 
 ## PWA y funcionamiento offline
 

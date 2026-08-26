@@ -1,5 +1,10 @@
-/* RNF04: base tipográfica 16-18px, mobile-first (se diseña primero para celular). */
+/* Hoja de estilos única de la aplicación (sección 7 del prompt maestro): está
+   prohibido cualquier <style> o atributo style= en las vistas. */
+
 html {
+  position: relative;
+  min-height: 100%;
+  /* RNF04: base tipográfica 16-18px, mobile-first (se diseña primero para celular). */
   font-size: 16px;
 }
 
@@ -9,7 +14,11 @@ html {
   }
 }
 
-/* RNF04: botones y áreas táctiles de mínimo 44x44px, para uso en movimiento. */
+body {
+  margin-bottom: 60px;
+}
+
+/* RNF04: botones y campos con áreas táctiles de mínimo 44x44px, para uso en movimiento. */
 .btn,
 .form-control,
 .form-select {
@@ -22,24 +31,30 @@ html {
   font-weight: 700;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+/* RNF01: banner de "Tenés N gastos sin sincronizar" (offline.js), siempre visible
+   arriba de todo, incluso si la página tiene scroll. */
+#banner-pendientes {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  border-radius: 0;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
-}
-
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
   text-align: start;
 }

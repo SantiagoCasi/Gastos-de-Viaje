@@ -27,7 +27,7 @@ cada fase (sección 8 del prompt maestro).
 | Código | Descripción | Estado | Cubierto por |
 |---|---|---|---|
 | RNF01 | Disponibilidad offline | Cumplido | PWA: manifest + service worker + banner (Fase 6) |
-| RNF02 | Web MVC responsive | Cumplido (revisión final en Fase 7) | Bootstrap + `site.css` mobile-first |
+| RNF02 | Web MVC responsive | Cumplido | Bootstrap + `site.css` mobile-first, revisado en Fase 7 |
 | RNF03 | Persistencia local hasta sincronizar | Cumplido | IndexedDB (Fase 6) |
 | RNF04 | Cargar un gasto en pocos pasos | Cumplido | Vista `Gasto/Create` en una sola pantalla (Fase 3) |
 | RNF05 | Servicios externos mínimos | Cumplido por diseño | Sin SMTP, sin WhatsApp Business API (secciones 6 y 10) |
