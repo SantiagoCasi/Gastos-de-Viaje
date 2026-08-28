@@ -30,7 +30,7 @@
 else
 {
     <div class="table-responsive">
-        <table class="table table-striped align-middle">
+        <table class="table table-striped align-middle table-stack">
             <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.First().Fecha)</th>
@@ -47,13 +47,13 @@ else
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.Fecha.ToShortDateString()</td>
-                        <td>@item.Lugar</td>
-                        <td>@item.Motivo</td>
-                        <td>@item.ParticipanteNombre</td>
-                        <td>@item.MetodoPago</td>
-                        <td class="monto">@item.Monto.ToString("C2")</td>
-                        <td>
+                        <td data-label="@Html.DisplayNameFor(model => model.First().Fecha)">@item.Fecha.ToShortDateString()</td>
+                        <td data-label="@Html.DisplayNameFor(model => model.First().Lugar)">@item.Lugar</td>
+                        <td data-label="@Html.DisplayNameFor(model => model.First().Motivo)">@item.Motivo</td>
+                        <td data-label="@Html.DisplayNameFor(model => model.First().ParticipanteNombre)">@item.ParticipanteNombre</td>
+                        <td data-label="@Html.DisplayNameFor(model => model.First().MetodoPago)">@item.MetodoPago</td>
+                        <td class="monto" data-label="@Html.DisplayNameFor(model => model.First().Monto)">@item.Monto.ToString("C2")</td>
+                        <td data-label="@Html.DisplayNameFor(model => model.First().Saldado)">
                             @if (item.Saldado)
                             {
                                 <span class="badge text-bg-success">Saldado</span>

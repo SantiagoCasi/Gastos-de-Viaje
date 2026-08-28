@@ -40,7 +40,7 @@
 
 <h2>Detalle por participante</h2>
 <div class="table-responsive">
-    <table class="table table-striped align-middle">
+    <table class="table table-striped align-middle table-stack">
         <thead>
             <tr>
                 <th>Participante</th>
@@ -53,10 +53,10 @@
             @foreach (var fila in Model.Participantes)
             {
                 <tr>
-                    <td>@fila.Nombre</td>
-                    <td>@fila.Pagado.ToString("C2")</td>
-                    <td>@fila.Cuota.ToString("C2")</td>
-                    <td class="@(fila.Saldo > 0 ? "text-success" : fila.Saldo < 0 ? "text-danger" : "")">
+                    <td data-label="Participante">@fila.Nombre</td>
+                    <td data-label="Pagado">@fila.Pagado.ToString("C2")</td>
+                    <td data-label="Cuota">@fila.Cuota.ToString("C2")</td>
+                    <td data-label="Saldo" class="@(fila.Saldo > 0 ? "text-success" : fila.Saldo < 0 ? "text-danger" : "")">
                         @fila.Saldo.ToString("C2")
                     </td>
                 </tr>

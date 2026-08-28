@@ -18,7 +18,7 @@
 else
 {
     <div class="table-responsive">
-        <table class="table table-striped align-middle">
+        <table class="table table-striped align-middle table-stack">
             <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.Nombre)</th>
@@ -29,7 +29,7 @@ else
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                        <td data-label="@Html.DisplayNameFor(model => model.Nombre)">@Html.DisplayFor(modelItem => item.Nombre)</td>
                         <td class="text-end">
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
                             <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>

@@ -18,7 +18,7 @@
 else
 {
     <div class="table-responsive">
-        <table class="table table-striped align-middle">
+        <table class="table table-striped align-middle table-stack">
             <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.Nombre)</th>
@@ -32,14 +32,14 @@ else
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
-                        <td>
+                        <td data-label="@Html.DisplayNameFor(model => model.Nombre)">@Html.DisplayFor(modelItem => item.Nombre)</td>
+                        <td data-label="@Html.DisplayNameFor(model => model.Estado)">
                             <span class="badge @(item.Estado == EstadoSesion.Abierta ? "text-bg-success" : "text-bg-secondary")">
                                 @item.Estado
                             </span>
                         </td>
-                        <td>@item.FechaCreacion.ToShortDateString()</td>
-                        <td>@Html.DisplayFor(modelItem => item.Moneda)</td>
+                        <td data-label="@Html.DisplayNameFor(model => model.FechaCreacion)">@item.FechaCreacion.ToShortDateString()</td>
+                        <td data-label="@Html.DisplayNameFor(model => model.Moneda)">@Html.DisplayFor(modelItem => item.Moneda)</td>
                         <td class="text-end">
                             <a asp-controller="Participante" asp-action="Index" asp-route-sesionViajeId="@item.Id" class="btn btn-sm btn-outline-secondary">Participantes</a>
                             <a asp-controller="Gasto" asp-action="Index" asp-route-sesionViajeId="@item.Id" class="btn btn-sm btn-outline-secondary">Gastos</a>

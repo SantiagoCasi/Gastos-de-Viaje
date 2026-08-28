@@ -1,11 +1,93 @@
 /* Hoja de estilos única de la aplicación (sección 7 del prompt maestro): está
-   prohibido cualquier <style> o atributo style= en las vistas. */
+   prohibido cualquier <style> o atributo style= en las vistas.
+
+   Identidad visual: paleta cálida arena/beige con un acento terracota, pensada
+   para leerse "de un pantallazo" en movimiento (auto, bar, calle) y a pleno sol.
+   Por eso el texto usa un marrón casi negro sobre fondos claros: la relación de
+   contraste ronda 14:1 (muy por encima del mínimo AA de 4.5:1), así el brillo
+   exterior no lava la pantalla. Todos los colores de Bootstrap se resignan acá;
+   los componentes (.btn-primary, tablas, badges, etc.) heredan de estas
+   variables en vez de usar los azules/grises por defecto del framework. */
+
+:root {
+  --gv-sand-50: #fbf3e7;
+  --gv-sand-100: #f6ead7;
+  --gv-sand-200: #ebd9ba;
+  --gv-sand-300: #d9be8f;
+  --gv-surface: #fffdf8;
+  --gv-ink: #2b2116;
+  --gv-ink-soft: #5b4a38;
+  --gv-terracotta: #c1440e;
+  --gv-terracotta-dark: #9c3609;
+  --gv-olive: #4b7a3d;
+  --gv-olive-dark: #3c6231;
+  --gv-mustard: #c98a1a;
+  --gv-mustard-dark: #a16f13;
+  --gv-rust: #b3261e;
+  --gv-rust-dark: #8f1e18;
+  --gv-taupe: #8a6d46;
+  --gv-taupe-dark: #6e5636;
+
+  /* Paleta base de Bootstrap 5.3 (variables raíz). */
+  --bs-primary: var(--gv-terracotta);
+  --bs-primary-rgb: 193, 68, 14;
+  --bs-secondary: var(--gv-taupe);
+  --bs-secondary-rgb: 138, 109, 70;
+  --bs-success: var(--gv-olive);
+  --bs-success-rgb: 75, 122, 61;
+  --bs-warning: var(--gv-mustard);
+  --bs-warning-rgb: 201, 138, 26;
+  --bs-danger: var(--gv-rust);
+  --bs-danger-rgb: 179, 38, 30;
+  --bs-white-rgb: 255, 253, 248;
+
+  --bs-body-bg: var(--gv-sand-50);
+  --bs-body-bg-rgb: 251, 243, 231;
+  --bs-body-color: var(--gv-ink);
+  --bs-body-color-rgb: 43, 33, 22;
+  --bs-emphasis-color: var(--gv-ink);
+  --bs-emphasis-color-rgb: 43, 33, 22;
+  --bs-secondary-color: rgba(43, 33, 22, 0.72);
+  --bs-secondary-bg: var(--gv-sand-100);
+  --bs-tertiary-bg: var(--gv-sand-100);
+  --bs-border-color: var(--gv-sand-200);
+  --bs-link-color: var(--gv-terracotta-dark);
+  --bs-link-color-rgb: 156, 54, 9;
+  --bs-link-hover-color: var(--gv-terracotta);
+  --bs-link-hover-color-rgb: 193, 68, 14;
+
+  /* Subtonos usados por badges, alertas y list-group contextuales. */
+  --bs-warning-text-emphasis: var(--gv-ink);
+  --bs-warning-bg-subtle: #f6dda6;
+  --bs-warning-border-subtle: #e3b65b;
+  --bs-danger-text-emphasis: #7a1912;
+  --bs-danger-bg-subtle: #f3d2ce;
+  --bs-danger-border-subtle: #e2a199;
+  --bs-success-text-emphasis: #274420;
+  --bs-success-bg-subtle: #dce9d3;
+  --bs-success-border-subtle: #a9c79c;
+  --bs-secondary-text-emphasis: var(--gv-taupe-dark);
+  --bs-secondary-bg-subtle: var(--gv-sand-100);
+  --bs-secondary-border-subtle: var(--gv-sand-300);
+
+  --bs-focus-ring-color: rgba(201, 138, 26, 0.45);
+  --bs-border-radius: 0.55rem;
+  --bs-border-radius-sm: 0.4rem;
+  --bs-border-radius-lg: 0.85rem;
+
+  /* Bordes y sombras suaves: la versión anterior usaba filetes gruesos y
+     bordes muy marcados, lo que leía "rústico". Una sombra tenue en vez de
+     un borde duro da la misma separación visual con un aire más prolijo. */
+  --gv-line: rgba(43, 33, 22, 0.10);
+  --gv-shadow-soft: 0 1px 2px rgba(43, 33, 22, 0.05), 0 4px 14px -6px rgba(43, 33, 22, 0.12);
+}
 
 html {
   position: relative;
   min-height: 100%;
-  /* RNF04: base tipográfica 16-18px, mobile-first (se diseña primero para celular). */
-  font-size: 16px;
+  /* RNF04: base tipográfica mobile-first. Se sube un poco respecto del default
+     de Bootstrap (16px) porque la app se usa casi siempre de un vistazo rápido. */
+  font-size: 17px;
 }
 
 @media (min-width: 768px) {
@@ -16,6 +98,36 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color: var(--gv-sand-50);
+  color: var(--gv-ink);
+  line-height: 1.55;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--gv-ink);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+/* Antes llevaban un filete completo debajo: una barrita corta de acento
+   marca la sección con la misma claridad sin la sensación de "cartel". */
+h2 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.9rem;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  margin-top: 0.5rem;
+  border-radius: 2px;
+  background: var(--gv-terracotta);
 }
 
 /* RNF04: botones y campos con áreas táctiles de mínimo 44x44px, para uso en movimiento. */
@@ -23,12 +135,24 @@ body {
 .form-control,
 .form-select {
   min-height: 44px;
+  font-size: 1.05rem;
 }
 
-/* RNF04: los montos se muestran más grandes y en negrita que el resto del texto. */
+.btn {
+  font-weight: 600;
+  margin: 0.15rem 0.35rem 0.15rem 0;
+}
+
+.btn:last-child {
+  margin-right: 0;
+}
+
+/* RNF04: los montos se muestran más grandes y en negrita que el resto del texto,
+   y con el acento terracota para que salten a la vista en una tabla larga. */
 .monto {
-  font-size: 1.25em;
+  font-size: 1.3em;
   font-weight: 700;
+  color: var(--gv-terracotta-dark);
 }
 
 /* RNF01: banner de "Tenés N gastos sin sincronizar" (offline.js), siempre visible
@@ -38,14 +162,44 @@ body {
   top: 0;
   z-index: 1030;
   border-radius: 0;
+  font-weight: 600;
 }
 
 .btn:focus,
 .btn:active:focus,
-.btn-link.nav-link:focus,
+.btn-link.nav-link:focus {
+  box-shadow: 0 0 0 0.1rem var(--gv-surface), 0 0 0 0.2rem var(--gv-mustard);
+}
+
+/* Bootstrap fija estos colores de foco/selección en azul con valores hex
+   fijos (no variables), así que hay que pisarlos a mano para que todo el
+   formulario quede dentro de la paleta cálida. */
 .form-control:focus,
+.form-select:focus {
+  color: var(--gv-ink);
+  background-color: var(--gv-surface);
+  border-color: var(--gv-mustard);
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(201, 138, 26, 0.3);
+}
+
 .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  border-color: var(--gv-mustard);
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(201, 138, 26, 0.3);
+}
+
+.form-check-input:checked,
+.form-check-input[type="checkbox"]:indeterminate {
+  background-color: var(--gv-terracotta);
+  border-color: var(--gv-terracotta);
+}
+
+/* .nav-pills fija el color activo en azul con un hex fijo (no variable) —
+   lo usa, entre otras cosas, el menú lateral de "Mi cuenta" de Identity. */
+.nav-pills {
+  --bs-nav-pills-link-active-bg: var(--gv-terracotta);
+  --bs-nav-pills-link-active-color: #fff;
 }
 
 .form-floating > .form-control-plaintext::placeholder,
@@ -57,4 +211,302 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder,
 .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+
+/* Encabezado: fondo cálido propio en lugar del bg-white por defecto. Una
+   sombra suave (en vez de un filete grueso) separa el header del contenido
+   con un aire más prolijo. */
+.navbar.bg-white {
+  background-color: var(--gv-surface) !important;
+}
+
+.navbar {
+  border-bottom: 1px solid var(--gv-sand-200) !important;
+  box-shadow: 0 2px 10px -4px rgba(43, 33, 22, 0.14) !important;
+}
+
+.navbar-brand {
+  color: var(--gv-terracotta-dark) !important;
+  font-weight: 700;
+}
+
+.navbar .nav-link.text-dark {
+  color: var(--gv-ink) !important;
+  font-weight: 600;
+}
+
+.navbar .nav-link.text-dark:hover,
+.navbar .nav-link.text-dark:focus {
+  color: var(--gv-terracotta-dark) !important;
+}
+
+footer.footer {
+  background-color: var(--gv-surface);
+  border-top: 1px solid var(--gv-sand-200) !important;
+  color: var(--gv-ink-soft);
+}
+
+/* Formularios: fondo más claro que la página para que el campo se distinga
+   con facilidad al tocarlo sin mirar de cerca. */
+.form-control,
+.form-select {
+  background-color: var(--gv-surface);
+  border-color: var(--gv-sand-200);
+  color: var(--gv-ink);
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--gv-ink);
+}
+
+.form-text {
+  color: var(--gv-ink-soft);
+}
+
+/* Tablas y listas: superficie propia (más clara que el fondo de página) para
+   que se lean como una tarjeta y el zebrado sea evidente al pasar el dedo. */
+.table {
+  --bs-table-bg: var(--gv-surface);
+  --bs-table-striped-bg: var(--gv-sand-100);
+  border-radius: var(--bs-border-radius);
+  overflow: hidden;
+}
+
+.table thead th {
+  border-bottom: 2px solid var(--gv-terracotta);
+  color: var(--gv-ink-soft);
+  font-weight: 600;
+  font-size: 0.82em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.table-responsive {
+  border-radius: var(--bs-border-radius);
+}
+
+/* En una tabla con varias columnas, "responsive" solo agrega scroll
+   horizontal: en un teléfono angosto los encabezados se parten en 3 líneas
+   y los botones de acción quedan tapados fuera de la pantalla. Como la app
+   se usa exclusivamente desde el celular, por debajo del breakpoint de
+   tablet cada fila de .table-stack se convierte en una tarjeta apilada
+   (etiqueta + valor), y recién de tablet para arriba se ve como tabla. */
+@media (max-width: 767.98px) {
+  .table-stack thead {
+    display: none;
+  }
+
+  .table-stack,
+  .table-stack tbody,
+  .table-stack tr,
+  .table-stack td {
+    display: block;
+    width: 100%;
+  }
+
+  .table-stack tr {
+    margin-bottom: 0.75rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--gv-line);
+    border-radius: var(--bs-border-radius-lg);
+    background-color: var(--gv-surface);
+    box-shadow: var(--gv-shadow-soft);
+  }
+
+  .table-stack tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .table-stack td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.35rem 0;
+    border: 0;
+    text-align: right;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .table-stack td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--gv-ink-soft);
+    text-align: left;
+  }
+
+  .table-stack td.text-end {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    text-align: left;
+    padding-top: 0.6rem;
+    margin-top: 0.35rem;
+    border-top: 1px solid var(--gv-line);
+  }
+
+  .table-stack td.text-end::before {
+    content: none;
+  }
+
+  .table-stack td.text-end .btn {
+    margin: 0.2rem 0.35rem 0.2rem 0;
+  }
+}
+
+.list-group-item {
+  --bs-list-group-bg: var(--gv-surface);
+  --bs-list-group-border-color: var(--gv-line);
+  margin-bottom: 0.6rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--bs-border-radius-lg) !important;
+  box-shadow: var(--gv-shadow-soft);
+}
+
+.list-group-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Badges de estado (Saldado/Pendiente/Abierta/Cerrada): antes eran chips
+   sólidos bien saturados (leían "cartel de feria"). Un relleno tenue con
+   texto en el mismo tono, más redondeado, se ve como un chip de estado
+   prolijo y sigue leyéndose sin acercar el teléfono. */
+.badge {
+  font-size: 0.8em;
+  font-weight: 600;
+  padding: 0.5em 0.85em;
+  border-radius: 50rem;
+  border: 1px solid transparent;
+}
+
+.text-bg-success {
+  color: var(--bs-success-text-emphasis) !important;
+  background-color: var(--bs-success-bg-subtle) !important;
+  border-color: var(--bs-success-border-subtle) !important;
+}
+
+.text-bg-warning {
+  color: var(--bs-warning-text-emphasis) !important;
+  background-color: var(--bs-warning-bg-subtle) !important;
+  border-color: var(--bs-warning-border-subtle) !important;
+}
+
+.text-bg-secondary {
+  color: var(--bs-secondary-text-emphasis) !important;
+  background-color: var(--bs-secondary-bg-subtle) !important;
+  border-color: var(--bs-secondary-border-subtle) !important;
+}
+
+.text-bg-danger {
+  color: var(--bs-danger-text-emphasis) !important;
+  background-color: var(--bs-danger-bg-subtle) !important;
+  border-color: var(--bs-danger-border-subtle) !important;
+}
+
+/* Listas de datos (dl.row) usadas en las vistas de detalle: etiqueta chica
+   en mayúsculas y valor en peso normal, como una ficha prolija en vez de
+   dos líneas igual de "gritadas". */
+dl.row dt {
+  color: var(--gv-ink-soft);
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.15rem;
+}
+
+dl.row dd {
+  color: var(--gv-ink);
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+
+/* dl.row dd tiene más especificidad que .monto sola (dos elementos contra
+   uno): sin este empate explícito, un monto dentro de una dl.row perdería
+   el tamaño/negrita que exige RNF04. */
+dl.row dd.monto {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: var(--gv-terracotta-dark);
+}
+
+/* Botones: se resignan a la paleta cálida (Bootstrap trae azul/gris/rojo por defecto). */
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--gv-terracotta);
+  --bs-btn-border-color: var(--gv-terracotta);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--gv-terracotta-dark);
+  --bs-btn-hover-border-color: var(--gv-terracotta-dark);
+  --bs-btn-focus-shadow-rgb: 201, 138, 26;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--gv-terracotta-dark);
+  --bs-btn-active-border-color: var(--gv-terracotta-dark);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--gv-terracotta);
+  --bs-btn-disabled-border-color: var(--gv-terracotta);
+}
+
+.btn-success {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--gv-olive);
+  --bs-btn-border-color: var(--gv-olive);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--gv-olive-dark);
+  --bs-btn-hover-border-color: var(--gv-olive-dark);
+  --bs-btn-focus-shadow-rgb: 75, 122, 61;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--gv-olive-dark);
+  --bs-btn-active-border-color: var(--gv-olive-dark);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--gv-olive);
+  --bs-btn-disabled-border-color: var(--gv-olive);
+}
+
+.btn-danger {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--gv-rust);
+  --bs-btn-border-color: var(--gv-rust);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--gv-rust-dark);
+  --bs-btn-hover-border-color: var(--gv-rust-dark);
+  --bs-btn-focus-shadow-rgb: 179, 38, 30;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--gv-rust-dark);
+  --bs-btn-active-border-color: var(--gv-rust-dark);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--gv-rust);
+  --bs-btn-disabled-border-color: var(--gv-rust);
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--gv-taupe-dark);
+  --bs-btn-border-color: var(--gv-taupe);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--gv-taupe);
+  --bs-btn-hover-border-color: var(--gv-taupe);
+  --bs-btn-focus-shadow-rgb: 138, 109, 70;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--gv-taupe-dark);
+  --bs-btn-active-border-color: var(--gv-taupe-dark);
+  --bs-btn-disabled-color: var(--gv-taupe);
+  --bs-btn-disabled-border-color: var(--gv-taupe);
+}
+
+.btn-outline-danger {
+  --bs-btn-color: var(--gv-rust);
+  --bs-btn-border-color: var(--gv-rust);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--gv-rust);
+  --bs-btn-hover-border-color: var(--gv-rust);
+  --bs-btn-focus-shadow-rgb: 179, 38, 30;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--gv-rust-dark);
+  --bs-btn-active-border-color: var(--gv-rust-dark);
+  --bs-btn-disabled-color: var(--gv-rust);
+  --bs-btn-disabled-border-color: var(--gv-rust);
 }
