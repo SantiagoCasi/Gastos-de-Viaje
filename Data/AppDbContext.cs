@@ -1,6 +1,7 @@
 using GastosDeViaje.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GastosDeViaje.Data;
 
@@ -104,5 +105,35 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
         // Índices sobre las columnas más consultadas (RNF07: sesiones con muchos participantes).
         builder.Entity<Gasto>().HasIndex(g => g.SesionViajeId);
         builder.Entity<Gasto>().HasIndex(g => g.LiquidacionId);
+
+        // Npgsql exige Kind=Utc para "timestamp with time zone": tanto los DateTime.Now
+        // del código (Kind=Local) como los que llegan del model binder de un <input
+        // type="date"> (Kind=Unspecified) lo rompen. Se normaliza acá para todas las
+        // entidades en vez de tocar cada punto donde se asigna una fecha.
+        var conversorUtc = new ValueConverter<DateTime, DateTime>(
+            v => AUtc(v),
+            v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+        var conversorUtcNullable = new ValueConverter<DateTime?, DateTime?>(
+            v => v.HasValue ? AUtc(v.Value) : v,
+            v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : v);
+
+        foreach (var propiedad in builder.Model.GetEntityTypes().SelectMany(e => e.GetProperties()))
+        {
+            if (propiedad.ClrType == typeof(DateTime))
+            {
+                propiedad.SetValueConverter(conversorUtc);
+            }
+            else if (propiedad.ClrType == typeof(DateTime?))
+            {
+                propiedad.SetValueConverter(conversorUtcNullable);
+            }
+        }
     }
+
+    private static DateTime AUtc(DateTime valor) => valor.Kind switch
+    {
+        DateTimeKind.Utc => valor,
+        DateTimeKind.Local => valor.ToUniversalTime(),
+        _ => DateTime.SpecifyKind(valor, DateTimeKind.Utc)
+    };
 }
