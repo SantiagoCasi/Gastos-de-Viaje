@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("No se encontró la cadena de conexión 'DefaultConnection'.");
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseNpgsql(connectionString));
 
 // Identity Individual Accounts (RF01, RF02). Sin confirmación de cuenta por email:
 // no se configura SMTP, decisión tomada en la sección 6 del prompt maestro.

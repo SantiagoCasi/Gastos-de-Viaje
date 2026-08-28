@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>c376b8ae-02c2-4079-a86c-6e127ad100b8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- La app usa Npgsql (PostgreSQL) en tiempo de ejecución (ver Program.cs).
+         Se mantiene el paquete de SqlServer solo porque GastosDeViaje.Tests/BalanceServiceFixture.cs
+         todavía corre contra un SQL Server local; no afecta al deploy (no se referencia en runtime). -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
