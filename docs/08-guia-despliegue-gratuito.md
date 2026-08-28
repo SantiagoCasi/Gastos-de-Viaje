@@ -21,7 +21,15 @@ Limitaciones a tener en cuenta del plan gratuito:
 
 ---
 
-## 1. Cambiar el proveedor de base de datos: SQL Server → PostgreSQL
+> **Estado:** los pasos 1 y 5 (migrar el proveedor a PostgreSQL y crear el
+> Dockerfile) ya están hechos en el repo — quedan documentados igual acá
+> para referencia, pero podés saltar directo al paso 2 (crear la base en
+> Neon). Lo que falta es todo lo que requiere una cuenta tuya: Neon,
+> GitHub y Render.
+
+---
+
+## 1. Cambiar el proveedor de base de datos: SQL Server → PostgreSQL ✅ hecho
 
 El proyecto usa actualmente `Microsoft.EntityFrameworkCore.SqlServer`
 ([GastosDeViaje.csproj](../GastosDeViaje.csproj)) apuntando a un SQL Server
@@ -152,7 +160,7 @@ git push -u origin master
 
 ---
 
-## 5. Crear un Dockerfile
+## 5. Crear un Dockerfile ✅ hecho
 
 Render construye y corre la app dentro de un contenedor Docker. Creá un
 archivo `Dockerfile` en la raíz del repo (mismo nivel que
